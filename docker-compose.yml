@@ -3,6 +3,8 @@ networks:
     external: true
   database:
     external: true
+  default:
+    CHANGE_TO_USERNAME:
 
 volumes:
   mariadb:
