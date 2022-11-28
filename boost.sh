@@ -31,7 +31,6 @@ do
           read -p "Enter site name or abbreviation (no spaces): " sitename
           sudo chown -R nobody: "/home/$CUR_USER/sites/$sitename"
           break;;
-          break;;
         "Add SSH key")
           read -p "Please paste your public SSH key: " sshkey
           echo $sshkey >> /home/$CUR_USER/.ssh/authorized_keys
