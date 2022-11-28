@@ -72,7 +72,7 @@ services:
       DB_MYSQL_NAME: 'npm'
     volumes:
       - ./npm/data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - ./npm/letsencrypt:/etc/letsencrypt
 
   filebrowser:
     image: hurlenko/filebrowser

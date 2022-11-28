@@ -102,8 +102,6 @@ sed -i "s/USER_GID/$(id -g $username)/" "/home/$username/server/docker-compose.y
 sed -i "s|USER_TIMEZONE|$(timedatectl show | grep zone | sed 's/Timezone=//g')|" "/home/$username/server/docker-compose.yml"
 docker compose -f /home/$username/server/docker-compose.yml up -d
 
-chown -R $username: /home/$username/server
-
 # dummy logs so fail2ban doesn't shut down
 mkdir -p /home/$username/server/npm/data/logs
 touch /home/$username/server/npm/data/logs/proxy-host-{1..9}_access.log
@@ -113,7 +111,7 @@ touch /home/$username/server/npm/data/logs/proxy-host-{1..9}_access.log
 # cp /tmp/docker-server/nginx/http.conf /home/$username/server/npm/data/nginx/custom/http.conf
 
 # fix permissions
-chown $username: /home/$username/server /home/$username/sites /home/$username/server/docker-compose.yml /home/$username/firewall.sh
+chown $username: /home/$username/sites /home/$username/server/docker-compose.yml /home/$username/firewall.sh
 # nobody user bc that's what wp container uses
 chown -R nobody:nogroup /home/$username/server/filebrowser
 
