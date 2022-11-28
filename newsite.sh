@@ -13,7 +13,7 @@ fi
 mkdir -p "/home/$CUR_USER/sites/$sitename/wordpress"
 curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/wordpress/docker-compose.yml > "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
 curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/wordpress/.htninja > "/home/$CUR_USER/sites/$sitename/.htninja"
-chown nobody: /home/$CUR_USER/sites/$sitename/.htninja
+# chown nobody: /home/$CUR_USER/sites/$sitename/.htninja
 
 # replace yml with site name
 sed -i "s/CHANGE_TO_SITE_NAME/$sitename/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
