@@ -1,0 +1,30 @@
+networks:
+  CHANGE_TO_USERNAME:
+    external: true
+
+services:
+  CHANGE_TO_SITE_NAME-redis:
+    container_name: CHANGE_TO_SITE_NAME-redis
+    image: redis:7-alpine
+    restart: unless-stopped
+    networks:
+      - CHANGE_TO_USERNAME
+
+  CHANGE_TO_SITE_NAME:
+    container_name: CHANGE_TO_SITE_NAME
+    image: ghcr.io/boost-creative/docker-wordpress-8:latest
+    volumes:
+      - ./wordpress:/usr/src/wordpress
+      - ./.htninja:/usr/src/.htninja
+    restart: unless-stopped
+    networks:
+      - CHANGE_TO_USERNAME
+    depends_on:
+      - CHANGE_TO_SITE_NAME-redis
+    environment:
+      # installs recommended plugins (see readme)
+      ADDITIONAL_PLUGINS:
+        'w3-total-cache post-smtp ninjafirewall disable-media-pages'
+        # cron jobs to run from within container (separate lines with \n)
+      #CRON: "* * * * * touch hello-world \n
+      #  0 * * * * curl http://127.0.0.1/webhook &>/dev/null"
