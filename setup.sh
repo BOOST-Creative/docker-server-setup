@@ -172,3 +172,11 @@ echo -e "    ServerAliveCountMax 10\n"
 
 # clean up script
 rm ./setup.sh
+
+# change timezone (works on debian / ubuntu / fedora)
+read -p "$(echo -e "${YELLOW}Do you want to reboot now (y/n)?${ENDCOLOR} ")" yn
+if [[ $yn =~ ^[Yy]$ ]]
+then
+  reboot;
+fi
+
