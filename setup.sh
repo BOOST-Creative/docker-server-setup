@@ -64,14 +64,14 @@ chown -R $username: /home/$username/.ssh
 # add / update packages
 echo -e "${CYAN}Updating system & packages...${ENDCOLOR}"
 
-# update system
-# apt update && apt upgrade -y
-apt update
-apt install git unattended-upgrades -y
 
 # install docker
 curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 sh /tmp/get-docker.sh
+
+# update system - apt update runs in docker script
+# apt upgrade -y
+apt install git unattended-upgrades -y
 
 # unattended-upgrades
 echo -e "${CYAN}Setting up unattended-upgrades...${ENDCOLOR}"
