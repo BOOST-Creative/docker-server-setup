@@ -70,7 +70,7 @@ curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 sh /tmp/get-docker.sh
 
 # update system - apt update runs in docker script
-# apt upgrade -y
+apt upgrade -y
 apt install git unattended-upgrades -y
 
 # unattended-upgrades
