@@ -3,8 +3,6 @@ networks:
     external: true
   database:
     external: true
-  default:
-    CHANGE_TO_USERNAME:
 
 volumes:
   mariadb:
@@ -14,6 +12,8 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
+    networks:
+      - CHANGE_TO_USERNAME
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./portainer:/data
