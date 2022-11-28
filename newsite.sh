@@ -34,7 +34,7 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
   docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" create
   echo "Upload your files and start the site later. Goodbye :)"
-  rm ./newsite.sh
+  rm ~/.newsite.sh
   exit;
 fi
 
