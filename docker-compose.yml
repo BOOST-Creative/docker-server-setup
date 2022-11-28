@@ -72,7 +72,6 @@ services:
       DB_MYSQL_NAME: 'npm'
     volumes:
       - ./npm/data:/data
-      - ./npm/nginx:/etc/nginx
       - ./letsencrypt:/etc/letsencrypt
 
   filebrowser:

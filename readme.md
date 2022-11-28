@@ -44,6 +44,8 @@ These are defined and can be disabled in `~/server/docker-compose.yml`.
 
 ### Notes
 
+To create / start / stop / fix permissions for wordpress sites, run the command `boost`.
+
 Debian / Ubuntu derivatives like Raspbian should work but haven't been tested.
 
 There is a docker network with the same name as your username. If you create new containers in that that network, you can use the container name as a hostname in Nginx Proxy Manager.
