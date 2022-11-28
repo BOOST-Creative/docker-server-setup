@@ -17,7 +17,7 @@ chown nobody: /home/$CUR_USER/sites/$sitename/.htninja
 
 # replace yml with site name
 sed -i "s/CHANGE_TO_SITE_NAME/$sitename/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
-sed -i "s/CHANGE_TO_USERNAME/$sitename/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
+sed -i "s/CHANGE_TO_USERNAME/$CUR_USER/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
 
 echo -e "\e[32mSite created at /home/$CUR_USER/sites/$sitename/wordpress\e[0m"
 
