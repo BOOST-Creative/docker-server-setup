@@ -4,7 +4,7 @@ CUR_USER="$(whoami)"
 
 PS3="Choose action: "
 
-select lng in "Start site" "Stop Site" "Create site" "Restart Site" "Fix permissions" "Quit"
+select lng in "Start site" "Stop Site" "Create site" "Restart Site" "Fix permissions" "Add SSH key" "Quit"
 do
     case $lng in
         "Start site")
