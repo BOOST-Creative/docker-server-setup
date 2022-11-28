@@ -15,6 +15,14 @@ curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/mai
 curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/wordpress/.htninja > "/home/$CUR_USER/sites/$sitename/.htninja"
 # chown nobody: /home/$CUR_USER/sites/$sitename/.htninja
 
+read -p 'Type "PHP7" if this site requires PHP 7: ' oldphp
+
+if [ $oldphp == "PHP7" ]
+then
+  echo "Using PHP 7..."
+  sed -i "s/docker-wordpress-8/docker-wordpress-7/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
+fi
+
 # replace yml with site name
 sed -i "s/CHANGE_TO_SITE_NAME/$sitename/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
 sed -i "s/CHANGE_TO_USERNAME/$CUR_USER/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
