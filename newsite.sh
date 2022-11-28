@@ -17,7 +17,7 @@ curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/mai
 
 read -p 'Type "PHP7" if this site requires PHP 7: ' oldphp
 
-if [ $oldphp == "PHP7" ]
+if [ "$oldphp" == "PHP7" ]
 then
   echo "Using PHP 7..."
   sed -i "s/docker-wordpress-8/docker-wordpress-7/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
