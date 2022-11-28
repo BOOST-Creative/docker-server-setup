@@ -33,7 +33,7 @@ read -p "Start site now and create a fresh wp installation (y/n)? " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
   docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" create
-  echo -e "\e[36mChanging owner of site directory...\e[0m"
+  echo -e "\n\e[36mChanging owner of site directory...\e[0m"
   # fix permissions for wordpress directory
   sudo chown nobody: "/home/$CUR_USER/sites/$sitename/wordpress"
   echo "Upload your files and start the site later. Goodbye :)"
