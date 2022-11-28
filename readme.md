@@ -67,3 +67,9 @@ Additional fail2ban rules may be added to the container in `~/server/fail2ban`. 
 ### Using with Cloudflare
 
 info about how use cloudflare action to ban ip instead of iptables
+
+### TODO
+
+- wordpress image with php 7
+
+- install kopia and create first snapshots in setup

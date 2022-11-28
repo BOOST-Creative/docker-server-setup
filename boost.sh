@@ -24,7 +24,7 @@ do
           break;;
         "Create site")
           echo -e "\e[36mCreating site...\e[0m"
-          curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/newsite.sh > ./newsite.sh && ./newsite.sh
+          curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/newsite.sh > ~/.newsite.sh && chmod +x ~/.newsite.sh && ~/.newsite.sh
           break;;
         "Fix permissions")
           echo -e "\e[36mFixing permissions...\e[0m"

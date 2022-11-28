@@ -32,4 +32,4 @@ fi
 
 # start site
 docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" up -d
-rm ./newsite.sh
+rm ~/.newsite.sh

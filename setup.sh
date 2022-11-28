@@ -149,7 +149,7 @@ done
 echo 'alias dcu="docker compose up -d"' >> /home/$username/.bashrc
 echo 'alias dcd="docker compose down"' >> /home/$username/.bashrc
 echo 'alias dcr="docker compose restart"' >> /home/$username/.bashrc
-echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && ~/.boost.sh"' >> /home/boost/.bashrc
+echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"' >> /home/boost/.bashrc
 echo 'alias ctop="docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"' >> /home/$username/.bashrc
 echo 'echo -e "\nPortainer: \e[34mhttp://127.0.0.1:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://127.0.0.1:6901\n\e[0mphpMyAdmin: \e[34mhttp://127.0.0.1:6902\n\e[0mFileBrowser: \e[34mhttp://127.0.0.1:6903\e[0m\n\nRun ctop to manage containers and view metrics.\n"' >> /home/$username/.bashrc
 echo 'type ~/firewall.sh &>/dev/null && ./firewall.sh' >> /home/$username/.bashrc
