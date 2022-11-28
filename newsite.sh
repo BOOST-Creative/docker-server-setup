@@ -34,10 +34,13 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
   docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" create
   echo "Upload your files and start the site later. Goodbye :)"
+  # fix permissions for wordpress directory
+  chown nobody: "/home/$CUR_USER/sites/$sitename/wordpress"
   rm ~/.newsite.sh
   exit;
 fi
 
 # start site
 docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" up -d
+
 rm ~/.newsite.sh
