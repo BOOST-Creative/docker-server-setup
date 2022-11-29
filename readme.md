@@ -20,6 +20,8 @@ curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/mai
 
 - Ensures the server is set to your preferred time zone.
 
+- Installs **[kopia](https://github.com/kopia/kopia)** for backups. Check [here](https://ftlwebservices.com/fast-and-reliable-automated-cloud-backups-with-kopia-and-backblaze/) for instructions.
+
 - Adds aliases like `dcu` / `dcd` / `dcr` for docker compose up / down / restart.
 
 ### Installs docker, docker compose, and selected services
@@ -51,8 +53,6 @@ Debian / Ubuntu derivatives like Raspbian should work but haven't been tested.
 There is a docker network with the same name as your username. If you create new containers in that that network, you can use the container name as a hostname in Nginx Proxy Manager.
 
 If you need to open a port for Wireguard or another service, [allow the port in iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) and run `sudo netfilter-persistent save` to save rules.
-
-Make sure you have a good backup solution in place. I recommend **[kopia](https://github.com/kopia/kopia)**.
 
 To export the MariaDB database to disk for backup, you can use the command below in a cron job (you may want to change the output directory).
 

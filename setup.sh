@@ -64,6 +64,9 @@ chown -R $username: /home/$username/.ssh
 # add / update packages
 echo -e "${CYAN}Updating system & packages...${ENDCOLOR}"
 
+# kopia
+curl -s https://kopia.io/signing-key | gpg --dearmor -o /usr/share/keyrings/kopia-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/kopia-keyring.gpg] http://packages.kopia.io/apt/ stable main" | tee /etc/apt/sources.list.d/kopia.list
 
 # install docker
 curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
@@ -71,7 +74,7 @@ sh /tmp/get-docker.sh
 
 # update system - apt update runs in docker script
 apt upgrade -y
-apt install git unattended-upgrades -y
+apt install git kopia unattended-upgrades -y
 
 # unattended-upgrades
 echo -e "${CYAN}Setting up unattended-upgrades...${ENDCOLOR}"
