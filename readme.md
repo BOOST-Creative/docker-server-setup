@@ -72,6 +72,4 @@ info about how use cloudflare action to ban ip instead of iptables
 
 ### TODO
 
-- wordpress image with php 7
-
-- install kopia and create first snapshots in setup
+- set up kopia and create first snapshots of sites and mariadb in setup?
