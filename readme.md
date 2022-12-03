@@ -1,6 +1,6 @@
 ## BOOST setup script for Debian / Ubuntu servers
 
-Run as root on a fresh installation. This is a specific setup for our org. If you want a neutral setup, check **todo add repo**.
+Run as root on a fresh installation. This is a specific setup for our org. If you want a neutral setup, check [henrygd/docker-server-setup](https://github.com/henrygd/docker-server-setup).
 
 ```bash
 curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/setup.sh > setup.sh && chmod +x ./setup.sh && ./setup.sh
