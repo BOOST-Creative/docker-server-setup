@@ -23,11 +23,18 @@ echo -e "${GREEN}Welcome! This script should be run as the root user on a new De
 
 # change timezone (works on debian / ubuntu / fedora)
 read -p "$(echo -e "The system time zone is ${YELLOW}$CUR_TIMEZONE${ENDCOLOR}. Do you want to change it (y/n)?${ENDCOLOR} ")" yn
-if [[ $yn =~ ^[Yy]$ ]]
-then
-  read -p "Enter time zone: " new_timezone
-  timedatectl set-timezone $new_timezone
-  echo -e "${GREEN}Time zone has changed to: $new_timezone ${ENDCOLOR}"
+if [[ $yn =~ ^[Yy]$ ]]; then
+  if command -v dpkg-reconfigure &> /dev/null; then
+    dpkg-reconfigure tzdata;
+  else
+    read -p "Enter time zone: " new_timezone;
+    if timedatectl set-timezone $new_timezone; then
+      echo -e "${GREEN}Time zone has changed to: $new_timezone ${ENDCOLOR}"
+    else
+      echo -e "Run ${CYAN}timedatectl list-timezones${ENDCOLOR} to view all time zones";
+      exit;
+    fi
+  fi
 fi
 
 # create user account (works on debian / ubuntu / fedora)
