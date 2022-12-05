@@ -16,7 +16,7 @@ curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/mai
 
 - Configures firewall to block ingress except on ports 80, 443, and your chosen SSH port.
 
-- fail2ban working out of the box to block malicious bot traffic to public web applications.
+- Fail2ban working out of the box to block malicious bot traffic to public web applications.
 
 - Ensures the server is set to your preferred time zone.
 
@@ -62,13 +62,19 @@ docker exec mariadb sh -c \ 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PAS
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
-The fail2ban container is restarted once each day via cron to pick up log files from new proxy hosts. You can manually restart the container if you need it to work with new services immediately.
+The Fail2ban container is restarted once each day via cron to pick up log files from new proxy hosts. You can manually restart the container if you need it to work with new services immediately.
 
-Additional fail2ban rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
+Additional Fail2ban rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
 
 ### Using with Cloudflare
 
-info about how use cloudflare action to ban ip instead of iptables
+If you proxy traffic through Cloudflare and want to use Fail2ban, additional configuration is required to avoid banning Cloudflare IPs. Please reference the guides below.
+
+Fail2ban configuration is located in `~/server/fail2ban`.
+
+- https://www.youtube.com/watch?v=Ha8NIAOsNvo (and [companion article](https://dbt3ch.com/books/fail2ban/page/how-to-install-and-configure-Fail2ban-to-work-with-nginx-proxy-manager) by DB Tech)
+
+- https://blog.lrvt.de/fail2ban-with-nginx-proxy-manager/
 
 ### TODO
 
