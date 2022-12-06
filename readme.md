@@ -66,6 +66,14 @@ The Fail2ban container is restarted once each day via cron to pick up log files 
 
 Additional Fail2ban rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
 
+### Unbanning IPs in Fail2ban jail
+
+Replace `0.0.0.0` with the IP you want unbanned.
+
+```bash
+docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
+```
+
 ### Using with Cloudflare
 
 If you proxy traffic through Cloudflare and want to use Fail2ban, additional configuration is required to avoid banning Cloudflare IPs. Please reference the guides below.
