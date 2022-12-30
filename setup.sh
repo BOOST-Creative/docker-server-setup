@@ -8,10 +8,8 @@ clear
 
 # variables
 GREEN="\e[32m"
-BLUE="\e[34m"
 CYAN="\e[36m"
 YELLOW="\e[33m"
-RED="\e[31m"
 ENDCOLOR="\e[0m"
 REPO="BOOST-Creative/docker-server-setup"
 CUR_TIMEZONE=$(timedatectl show | grep zone | sed 's/Timezone=//g');
