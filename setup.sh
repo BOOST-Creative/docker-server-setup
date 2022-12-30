@@ -130,8 +130,8 @@ usermod -aG docker $username
 
 # systemd timer to reload fail2ban jail every six hours
 cp /tmp/docker-server/systemd/* /etc/systemd/system
-systemctl start restartFail2ban.timer
-systemctl enable restartFail2ban.timer
+systemctl start reloadFail2ban.timer
+systemctl enable reloadFail2ban.timer
 
 # update SSH config
 echo -e "\n${CYAN}Updating SSH config...${ENDCOLOR}"
