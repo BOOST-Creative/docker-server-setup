@@ -22,6 +22,7 @@ services:
     depends_on:
       - CHANGE_TO_SITE_NAME-redis
     environment:
+      REDIS_HOST: CHANGE_TO_SITE_NAME-redis
       # installs recommended plugins (see readme)
       ADDITIONAL_PLUGINS:
         'w3-total-cache post-smtp ninjafirewall disable-media-pages'
