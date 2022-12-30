@@ -54,15 +54,19 @@ There is a docker network with the same name as your username. If you create new
 
 If you need to open a port for Wireguard or another service, [allow the port in iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) and run `sudo netfilter-persistent save` to save rules.
 
-To export the MariaDB database to disk for backup, you can use the command below in a cron job (you may want to change the output directory).
+To export the MariaDB database to disk for backup, you can use the command below (you may want to change the output directory).
 
 ```bash
-docker exec mariadb sh -c \ 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > ~/mariadb.sql
+docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > ~/mariadb.sql
 ```
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
-The Fail2ban container is restarted once each day via cron to pick up log files from new proxy hosts. You can manually restart the container if you need it to work with new services immediately.
+The Fail2ban jail is reloaded every six hours with a systemd timer to pick up log files from new proxy hosts. You can manually run the command below if you need it to work with new services immediately.
+
+```bash
+docker exec fail2ban sh -c "fail2ban-client reload npm-docker"
+```
 
 Additional Fail2ban rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
 
