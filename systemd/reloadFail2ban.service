@@ -1,5 +1,5 @@
 [Unit]
-Description="Reloads npm-docker Fail2ban jail to add logs for new sites"
+Description="Reload npm-docker Fail2ban jail to add logs for new sites"
 Requires=docker.service
 After=docker.service
 
