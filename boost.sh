@@ -31,7 +31,7 @@ do
           read -p "Enter site name or abbreviation (no spaces) TO COMPLETELY DELETE: " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" stop
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" rm
-          rm -rf "/home/$CUR_USER/sites/$sitename"
+          sudo rm -rf "/home/$CUR_USER/sites/$sitename"
           break;;
         "Fix permissions")
           echo -e "\e[36mFixing permissions...\e[0m"
