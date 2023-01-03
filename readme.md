@@ -20,8 +20,6 @@ curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/mai
 
 - Ensures the server is set to your preferred time zone.
 
-- Installs **[kopia](https://github.com/kopia/kopia)** for backups. Check [here](https://ftlwebservices.com/fast-and-reliable-automated-cloud-backups-with-kopia-and-backblaze/) for instructions.
-
 - Adds aliases like `dcu` / `dcd` / `dcr` for docker compose up / down / restart.
 
 ### Installs docker, docker compose, and selected services
@@ -42,13 +40,13 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[Watchtower](https://github.com/containrrr/watchtower)** to automatically update running containers to the latest image version.
 
+- **[Kopia](https://github.com/kopia/kopia)** for backups.
+
 These are defined and can be disabled in `~/server/docker-compose.yml`.
 
 ### Notes
 
 To create / start / stop / fix permissions for wordpress sites, run the command `boost`.
-
-Debian / Ubuntu derivatives like Raspbian should work but haven't been tested.
 
 There is a docker network with the same name as your username. If you create new containers in that that network, you can use the container name as a hostname in Nginx Proxy Manager.
 
@@ -87,7 +85,3 @@ Fail2ban configuration is located in `~/server/fail2ban`.
 - https://www.youtube.com/watch?v=Ha8NIAOsNvo (and [companion article](https://dbt3ch.com/books/fail2ban/page/how-to-install-and-configure-Fail2ban-to-work-with-nginx-proxy-manager) by DB Tech)
 
 - https://blog.lrvt.de/fail2ban-with-nginx-proxy-manager/
-
-### TODO
-
-- set up kopia and create first snapshots of sites and mariadb in setup?
