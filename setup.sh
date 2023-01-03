@@ -132,6 +132,7 @@ htpasswd -bc /root/kopiap.txt kopia "$username"
 
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
+sed -i "s/USERNAME/$username/" /etc/systemd/system/kopiaServer.service
 systemctl daemon-reload
 # systemd timer to reload fail2ban jail every six hours
 systemctl start reloadFail2ban.timer
