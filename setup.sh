@@ -80,7 +80,7 @@ sh /tmp/get-docker.sh
 
 # update system - apt update runs in docker script
 apt upgrade -y
-apt install git kopia unattended-upgrades -y
+apt install git kopia apache2-utils unattended-upgrades -y
 
 # unattended-upgrades
 echo -e "${CYAN}Setting up unattended-upgrades...${ENDCOLOR}"
