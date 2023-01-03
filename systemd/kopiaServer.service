@@ -1,0 +1,8 @@
+[Unit]
+Description="Kopia Backup Server"
+
+[Service]
+ExecStart=kopia server start --insecure --htpasswd-file /root/kopiap.txt --address http://127.0.0.1:6904
+
+[Install]
+WantedBy=multi-user.target

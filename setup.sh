@@ -127,6 +127,9 @@ chown -R nobody:nogroup /home/$username/server/filebrowser
 # add user to docker users
 usermod -aG docker $username
 
+# generate password file for kopia server
+htpasswd -bc /root/kopiap.txt kopia "$username"
+
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
 systemctl daemon-reload
@@ -136,6 +139,9 @@ systemctl enable reloadFail2ban.timer > /dev/null 2>&1
 # systemd timer to backup mariadb every day at 2am
 systemctl start mariadbBackup.timer
 systemctl enable mariadbBackup.timer > /dev/null 2>&1
+# kopia server
+systemctl start kopiaServer.service
+systemctl enable kopiaServer.service > /dev/null 2>&1
 
 # update SSH config
 echo -e "\n${CYAN}Updating SSH config...${ENDCOLOR}"
@@ -162,9 +168,9 @@ done
 echo 'alias dcu="docker compose up -d"' >> /home/$username/.bashrc
 echo 'alias dcd="docker compose down"' >> /home/$username/.bashrc
 echo 'alias dcr="docker compose restart"' >> /home/$username/.bashrc
-echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"' >> /home/boost/.bashrc
+echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"' >> /home/$username/.bashrc
 echo 'alias ctop="docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"' >> /home/$username/.bashrc
-echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFileBrowser: \e[34mhttp://localhost:6903\e[0m\n\nRun ctop to manage containers and view metrics.\n"' >> /home/$username/.bashrc
+echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFileBrowser: \e[34mhttp://localhost:6903\e[0m\n\e[0mKopia: \e[34mhttp://localhost:6904\e[0m (kopia:'"$username"')\n\nRun ctop to manage containers and view metrics.\n"' >> /home/$username/.bashrc
 echo 'type ~/firewall.sh &>/dev/null && ./firewall.sh' >> /home/$username/.bashrc
 
 # Success Message
@@ -182,6 +188,7 @@ echo "    LocalForward 6900 127.0.0.1:6900"
 echo "    LocalForward 6901 127.0.0.1:6901"
 echo "    LocalForward 6902 127.0.0.1:6902"
 echo "    LocalForward 6903 127.0.0.1:6903"
+echo "    LocalForward 6904 127.0.0.1:6904"
 echo "    ServerAliveInterval 60"
 echo -e "    ServerAliveCountMax 10\n"
 
