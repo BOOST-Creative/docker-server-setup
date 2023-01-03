@@ -40,7 +40,7 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[Watchtower](https://github.com/containrrr/watchtower)** to automatically update running containers to the latest image version.
 
-- **[Kopia](https://github.com/kopia/kopia)** for backups.
+- **[Kopia Server](https://github.com/kopia/kopia)** for backups.
 
 These are defined and can be disabled in `~/server/docker-compose.yml`.
 
@@ -52,10 +52,10 @@ There is a docker network with the same name as your username. If you create new
 
 If you need to open a port for Wireguard or another service, [allow the port in iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) and run `sudo netfilter-persistent save` to save rules.
 
-To export the MariaDB database to disk for backup, you can use the command below (you may want to change the output directory).
+The MariaDB database is automatically saved to disk each day for backup. To export manually, you can use the command below.
 
 ```bash
-docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > ~/mariadb.sql
+docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > ~/server/backups/mariadb.sql
 ```
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
