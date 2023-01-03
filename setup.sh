@@ -43,6 +43,7 @@ done
 useradd -m -s /bin/bash $username
 passwd $username
 usermod -aG sudo $username || usermod -aG wheel $username
+echo "$username" > /root/.created_user
 
 echo ""
 
