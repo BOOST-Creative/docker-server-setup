@@ -6,3 +6,5 @@ After=docker.service
 [Service]
 User=boost
 ExecStart=mkdir -p "/home/$(cat /root/.created_user)/server/backups" && docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > "/home/$(cat /root/.created_user)/server/backups/mariadb.sql"
+# example to export individual databases
+# ExecStart=mkdir -p "/home/$(cat /root/.created_user)/server/backups/mariadb" && docker exec mariadb sh -c 'mysql -N -uroot -p"$MYSQL_ROOT_PASSWORD" -e "show databases"' | while read dbname; do docker exec -e dbname="$dbname" mariadb sh -c 'mysqldump --complete-insert -uroot -p"$MYSQL_ROOT_PASSWORD" "${dbname}"' > "/home/$(cat /root/.created_user)/server/backups/mariadb/$dbname.sql"; done
