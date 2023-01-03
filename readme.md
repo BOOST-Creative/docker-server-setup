@@ -36,7 +36,7 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[File Browser](https://github.com/filebrowser/filebrowser)** for graphical file management.
 
-- **[fail2ban](https://github.com/crazy-max/docker-fail2ban)** configured to read Nginx Proxy Manager logs and block malicious IPs in iptables.
+- **[Fail2ban](https://github.com/crazy-max/docker-fail2ban)** configured to read Nginx Proxy Manager logs and block malicious IPs in iptables.
 
 - **[Watchtower](https://github.com/containrrr/watchtower)** to automatically update running containers to the latest image version.
 

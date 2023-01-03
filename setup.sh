@@ -92,7 +92,7 @@ echo -e "${CYAN}Setting up docker containers...${ENDCOLOR}"
 # clone repo and copy files
 rm -r /tmp/docker-server ||:
 git clone --depth=1 "https://github.com/$REPO.git" /tmp/docker-server
-mkdir -p /home/$username/server/fail2ban /home/$username/sites
+mkdir -p /home/$username/server/fail2ban /home/$username/server/backups /home/$username/sites
 cp -r /tmp/docker-server/fail2ban /home/$username/server/fail2ban/data
 cp /tmp/docker-server/docker-compose.yml /home/$username/server/docker-compose.yml
 cp /tmp/docker-server/firewall.sh /home/$username/firewall.sh
