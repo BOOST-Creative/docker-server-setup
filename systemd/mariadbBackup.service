@@ -1,0 +1,8 @@
+[Unit]
+Description="Backup mariadb database"
+Requires=docker.service
+After=docker.service
+
+[Service]
+User=boost
+ExecStart=mkdir -p "/home/$(cat /root/.created_user)/server/backups" && docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > "/home/$(cat /root/.created_user)/server/backups/mariadb.sql"

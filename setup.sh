@@ -127,10 +127,15 @@ chown -R nobody:nogroup /home/$username/server/filebrowser
 # add user to docker users
 usermod -aG docker $username
 
-# systemd timer to reload fail2ban jail every six hours
+# set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
+systemctl daemon-reload
+# systemd timer to reload fail2ban jail every six hours
 systemctl start reloadFail2ban.timer
 systemctl enable reloadFail2ban.timer > /dev/null 2>&1
+# systemd timer to backup mariadb every day at 2am
+systemctl start mariadbBackup.timer
+systemctl enable mariadbBackup.timer > /dev/null 2>&1
 
 # update SSH config
 echo -e "\n${CYAN}Updating SSH config...${ENDCOLOR}"
