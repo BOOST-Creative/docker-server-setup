@@ -21,12 +21,12 @@ KOPIA_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-10})
 echo -e "${GREEN}Welcome! This script should be run as the root user on a new Debian or Ubuntu server.${ENDCOLOR}\n"
 
 # change timezone (works on debian / ubuntu / fedora)
-read -p "$(echo -e "The system time zone is ${YELLOW}$CUR_TIMEZONE${ENDCOLOR}. Do you want to change it (y/n)?${ENDCOLOR} ")" yn
+read -r -p "$(echo -e "The system time zone is ${YELLOW}$CUR_TIMEZONE${ENDCOLOR}. Do you want to change it (y/n)?${ENDCOLOR} ")" yn
 if [[ $yn =~ ^[Yy]$ ]]; then
   if command -v dpkg-reconfigure &> /dev/null; then
     dpkg-reconfigure tzdata;
   else
-    read -p "Enter time zone: " new_timezone;
+    read -r -p "Enter time zone: " new_timezone;
     if timedatectl set-timezone $new_timezone; then
       echo -e "${GREEN}Time zone has changed to: $new_timezone ${ENDCOLOR}"
     else
@@ -37,9 +37,9 @@ if [[ $yn =~ ^[Yy]$ ]]; then
 fi
 
 # create user account (works on debian / ubuntu / fedora)
-read -p "$(echo -e "\nEnter username for the user to be created: ")" username
+read -r -p "$(echo -e "\nEnter username for the user to be created: ")" username
 while [[ ! $username =~ ^[a-z][-a-z0-9]*$ ]]; do
-  read -p "Invalid format. Enter username for the user to be created: " username
+  read -r -p "Invalid format. Enter username for the user to be created: " username
 done
 useradd -m -s /bin/bash $username
 passwd $username
@@ -49,9 +49,9 @@ echo "$username" > /root/.created_user
 echo ""
 
 # SSH port prompt
-read -p "Which port do you want to use for SSH (not 6900-6903 please)? " ssh_port
+read -r -p "Which port do you want to use for SSH (not 6900-6903 please)? " ssh_port
 while (( ssh_port < 1000 || ssh_port > 65000)); do
-  read -p "Please use a number between 1000 and 65000: " ssh_port
+  read -r -p "Please use a number between 1000 and 65000: " ssh_port
 done
 
 # add ssh key
@@ -62,8 +62,8 @@ then
   cp /root/.ssh/authorized_keys /home/$username/.ssh/authorized_keys
 else
   # if no keys, ask for key instead
-  read -p "Please paste your public SSH key: " sshkey
-  echo $sshkey >> /home/$username/.ssh/authorized_keys
+  read -r -p "Please paste your public SSH key: " sshkey
+  echo "$sshkey" >> "/home/$username/.ssh/authorized_keys"
 fi
 # fix permissions
 chown -R $username: /home/$username/.ssh
@@ -158,12 +158,12 @@ systemctl restart sshd
 
 # verify ssh key is correct
 cat /home/$username/.ssh/authorized_keys
-read -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
+read -r -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
 while [[ ! $ssh_correct =~ ^[Yy]$ ]]; do
-  read -p "Please paste your public SSH key: " sshkey
+  read -r -p "Please paste your public SSH key: " sshkey
   echo $sshkey >> /home/$username/.ssh/authorized_keys
   cat /home/$username/.ssh/authorized_keys
-  read -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
+  read -r -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
 done
 
 # aliases / .bashrc stuff
@@ -201,7 +201,7 @@ echo -e "    ServerAliveCountMax 10\n"
 rm ./setup.sh
 
 # change timezone (works on debian / ubuntu / fedora)
-read -p "$(echo -e "${YELLOW}Do you want to reboot now (y/n)?${ENDCOLOR} ")" yn
+read -r -p "$(echo -e "${YELLOW}Do you want to reboot now (y/n)?${ENDCOLOR} ")" yn
 if [[ $yn =~ ^[Yy]$ ]]
 then
   reboot;
