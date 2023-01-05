@@ -13,9 +13,9 @@ YELLOW="\e[33m"
 ENDCOLOR="\e[0m"
 REPO="BOOST-Creative/docker-server-setup"
 CUR_TIMEZONE=$(timedatectl show | grep zone | sed 's/Timezone=//g');
-MARIA_DB_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-20})
-NPM_DB_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-20})
-KOPIA_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-10})
+MARIA_DB_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c"${1:-20}")
+NPM_DB_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c"${1:-20}")
+KOPIA_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c"${1:-10}")
 
 # intro message
 echo -e "${GREEN}Welcome! This script should be run as the root user on a new Debian or Ubuntu server.${ENDCOLOR}\n"
@@ -27,7 +27,7 @@ if [[ $yn =~ ^[Yy]$ ]]; then
     dpkg-reconfigure tzdata;
   else
     read -r -p "Enter time zone: " new_timezone;
-    if timedatectl set-timezone $new_timezone; then
+    if timedatectl set-timezone "$new_timezone"; then
       echo -e "${GREEN}Time zone has changed to: $new_timezone ${ENDCOLOR}"
     else
       echo -e "Run ${CYAN}timedatectl list-timezones${ENDCOLOR} to view all time zones";
@@ -41,9 +41,9 @@ read -r -p "$(echo -e "\nEnter username for the user to be created: ")" username
 while [[ ! $username =~ ^[a-z][-a-z0-9]*$ ]]; do
   read -r -p "Invalid format. Enter username for the user to be created: " username
 done
-useradd -m -s /bin/bash $username
-passwd $username
-usermod -aG sudo $username || usermod -aG wheel $username
+useradd -m -s /bin/bash "$username"
+passwd "$username"
+usermod -aG sudo "$username" || usermod -aG wheel "$username"
 echo "$username" > /root/.created_user
 
 echo ""
@@ -55,18 +55,18 @@ while (( ssh_port < 1000 || ssh_port > 65000)); do
 done
 
 # add ssh key
-mkdir -p /home/$username/.ssh
+mkdir -p /home/"$username"/.ssh
 # check if root has authorized_keys already
 if [ -s /root/.ssh/authorized_keys ]
 then
-  cp /root/.ssh/authorized_keys /home/$username/.ssh/authorized_keys
+  cp /root/.ssh/authorized_keys /home/"$username"/.ssh/authorized_keys
 else
   # if no keys, ask for key instead
   read -r -p "Please paste your public SSH key: " sshkey
-  echo "$sshkey" >> "/home/$username/.ssh/authorized_keys"
+  echo "$sshkey" >> /home/"$username"/.ssh/authorized_keys
 fi
 # fix permissions
-chown -R $username: /home/$username/.ssh
+chown -R "$username": /home/"$username"/.ssh
 
 # add / update packages
 echo -e "${CYAN}Updating system & packages...${ENDCOLOR}"
@@ -93,14 +93,14 @@ echo -e "${CYAN}Setting up docker containers...${ENDCOLOR}"
 # clone repo and copy files
 rm -r /tmp/docker-server ||:
 git clone --depth=1 "https://github.com/$REPO.git" /tmp/docker-server
-mkdir -p /home/$username/server/fail2ban /home/$username/server/backups /home/$username/sites
-cp -r /tmp/docker-server/fail2ban /home/$username/server/fail2ban/data
-cp /tmp/docker-server/docker-compose.yml /home/$username/server/docker-compose.yml
-cp /tmp/docker-server/firewall.sh /home/$username/firewall.sh
+mkdir -p /home/"$username"/server/fail2ban /home/"$username"/server/backups /home/"$username"/sites
+cp -r /tmp/docker-server/fail2ban /home/"$username"/server/fail2ban/data
+cp /tmp/docker-server/docker-compose.yml /home/"$username"/server/docker-compose.yml
+cp /tmp/docker-server/firewall.sh /home/"$username"/firewall.sh
 sed -i "s/REPLACE_ME/$ssh_port/" "/home/$username/firewall.sh"
 
 # create docker networks
-docker network create $username
+docker network create "$username"
 docker network create database
 
 # replace docker compose file with user input, and start
@@ -110,23 +110,23 @@ sed -i "s/NPM_DB_PASSWORD/$NPM_DB_PASSWORD/" "/home/$username/server/docker-comp
 sed -i "s/USER_UID/$(id -u $username)/" "/home/$username/server/docker-compose.yml"
 sed -i "s/USER_GID/$(id -g $username)/" "/home/$username/server/docker-compose.yml"
 sed -i "s|USER_TIMEZONE|$(timedatectl show | grep zone | sed 's/Timezone=//g')|" "/home/$username/server/docker-compose.yml"
-docker compose -f /home/$username/server/docker-compose.yml up -d
+docker compose -f /home/"$username"/server/docker-compose.yml up -d
 
 # dummy logs so fail2ban doesn't shut down
-mkdir -p /home/$username/server/npm/data/logs
-touch /home/$username/server/npm/data/logs/proxy-host-{1..9}_access.log
+mkdir -p /home/"$username"/server/npm/data/logs
+touch /home/"$username"/server/npm/data/logs/proxy-host-{1..9}_access.log
 
 # add custom http nginx config
-# mkdir -p /home/$username/server/npm/data/nginx/custom
-# cp /tmp/docker-server/nginx/http.conf /home/$username/server/npm/data/nginx/custom/http.conf
+# mkdir -p /home/"$username"/server/npm/data/nginx/custom
+# cp /tmp/docker-server/nginx/http.conf /home/"$username"/server/npm/data/nginx/custom/http.conf
 
 # fix permissions
-chown $username: /home/$username/sites /home/$username/server/docker-compose.yml /home/$username/firewall.sh
+chown "$username": /home/"$username"/sites /home/"$username"/server/docker-compose.yml /home/"$username"/firewall.sh
 # nobody user bc that's what wp container uses
-chown -R nobody:nogroup /home/$username/server/filebrowser
+chown -R nobody:nogroup /home/"$username"/server/filebrowser
 
 # add user to docker users
-usermod -aG docker $username
+usermod -aG docker "$username"
 
 # generate password file for kopia server
 htpasswd -bc /root/kopiap.txt kopia "$KOPIA_PASSWORD" > /dev/null 2>&1
@@ -147,22 +147,24 @@ systemctl enable kopiaServer.service > /dev/null 2>&1
 
 # update SSH config
 echo -e "\n${CYAN}Updating SSH config...${ENDCOLOR}"
-echo "Port $ssh_port" >> /etc/ssh/sshd_config
-echo "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
-echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
-echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
-echo "X11Forwarding no" >> /etc/ssh/sshd_config
+{
+  echo "Port $ssh_port" 
+  echo "PermitRootLogin prohibit-password"
+  echo "PubkeyAuthentication yes"
+  echo "PasswordAuthentication no"
+  echo "X11Forwarding no"
+} >> /etc/ssh/sshd_config
 
 echo -e "${CYAN}Restarting SSH daemon...${ENDCOLOR}\n"
 systemctl restart sshd
 
 # verify ssh key is correct
-cat /home/$username/.ssh/authorized_keys
+cat /home/"$username"/.ssh/authorized_keys
 read -r -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
 while [[ ! $ssh_correct =~ ^[Yy]$ ]]; do
   read -r -p "Please paste your public SSH key: " sshkey
-  echo $sshkey >> /home/$username/.ssh/authorized_keys
-  cat /home/$username/.ssh/authorized_keys
+  echo "$sshkey" >> /home/"$username"/.ssh/authorized_keys
+  cat /home/"$username"/.ssh/authorized_keys
   read -r -p "$(echo -e "\nIs the above SSH key(s) correct (y/n)? ")" ssh_correct
 done
 
