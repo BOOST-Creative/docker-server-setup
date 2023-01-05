@@ -181,7 +181,7 @@ echo -e "${GREEN}Update your SSH config file with the info below${ENDCOLOR}"
 
 echo -e "\n\033[1m🚨\e[31m ENABLE HETZNER FIREWALL NOW 🚨${ENDCOLOR}\n"
 
-echo "Host changeme"
+echo "Host $(hostname)"
 echo "    HostName $(curl -s ifconfig.me)"
 echo "    Port $ssh_port"
 echo "    User $username"
