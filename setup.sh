@@ -15,6 +15,7 @@ REPO="BOOST-Creative/docker-server-setup"
 CUR_TIMEZONE=$(timedatectl show | grep zone | sed 's/Timezone=//g');
 MARIA_DB_ROOT_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-20})
 NPM_DB_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-20})
+KOPIA_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-10})
 
 # intro message
 echo -e "${GREEN}Welcome! This script should be run as the root user on a new Debian or Ubuntu server.${ENDCOLOR}\n"
@@ -128,7 +129,7 @@ chown -R nobody:nogroup /home/$username/server/filebrowser
 usermod -aG docker $username
 
 # generate password file for kopia server
-htpasswd -bc /root/kopiap.txt kopia "$username"
+htpasswd -bc /root/kopiap.txt kopia "$KOPIA_PASSWORD" > /dev/null 2>&1
 
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
@@ -166,13 +167,16 @@ while [[ ! $ssh_correct =~ ^[Yy]$ ]]; do
 done
 
 # aliases / .bashrc stuff
-echo 'alias dcu="docker compose up -d"' >> /home/$username/.bashrc
-echo 'alias dcd="docker compose down"' >> /home/$username/.bashrc
-echo 'alias dcr="docker compose restart"' >> /home/$username/.bashrc
-echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"' >> /home/$username/.bashrc
-echo 'alias ctop="docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"' >> /home/$username/.bashrc
-echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFileBrowser: \e[34mhttp://localhost:6903\e[0m\n\e[0mKopia: \e[34mhttp://localhost:6904\e[0m (kopia:'"$username"')\n\nRun ctop to manage containers and view metrics.\n"' >> /home/$username/.bashrc
-echo 'type ~/firewall.sh &>/dev/null && ./firewall.sh' >> /home/$username/.bashrc
+{
+  echo 'alias dcu="docker compose up -d"';
+  echo 'alias dcd="docker compose down"';
+  echo 'alias dcu="docker compose up -d"';
+  echo 'alias dcr="docker compose restart"';
+  echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"';
+  echo 'alias ctop="docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"';
+  echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFileBrowser: \e[34mhttp://localhost:6903\e[0m\n\e[0mKopia: \e[34mhttp://localhost:6904\e[0m (kopia:'"$KOPIA_PASSWORD"')\n\nRun ctop to manage containers and view metrics.\n"';
+  echo 'type ~/firewall.sh &>/dev/null && ./firewall.sh';
+} >> "/home/$username/.bashrc"
 
 # Success Message
 echo -e "\n${GREEN}Setup complete 👍. Please log back in as $username on port $ssh_port.${ENDCOLOR}"
