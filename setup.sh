@@ -114,7 +114,7 @@ docker compose -f /home/"$username"/server/docker-compose.yml up -d
 
 # dummy logs so fail2ban doesn't shut down
 mkdir -p /home/"$username"/server/npm/data/logs
-touch /home/"$username"/server/npm/data/logs/proxy-host-{1..9}_access.log
+touch /home/"$username"/server/npm/data/logs/proxy-host-{1..5}_access.log
 
 # add custom http nginx config
 # mkdir -p /home/"$username"/server/npm/data/nginx/custom
