@@ -44,7 +44,6 @@ done
 useradd -m -s /bin/bash "$username"
 passwd "$username"
 usermod -aG sudo "$username" || usermod -aG wheel "$username"
-echo "$username" > /root/.created_user
 
 echo ""
 
@@ -134,6 +133,11 @@ htpasswd -bc /root/kopiap.txt kopia "$KOPIA_PASSWORD" > /dev/null 2>&1
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
 sed -i "s/USERNAME/$username/" /etc/systemd/system/kopiaServer.service
+
+cp /tmp/docker-server/export_mariadb.sh /root/.export_mariadb.sh
+chmod +x /root/.export_mariadb.sh
+sed -i "s/USERNAME/$username/" /root/.export_mariadb.sh
+
 systemctl daemon-reload
 # systemd timer to reload fail2ban jail every six hours
 systemctl start reloadFail2ban.timer

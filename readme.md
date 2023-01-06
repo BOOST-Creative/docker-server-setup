@@ -52,11 +52,7 @@ There is a docker network with the same name as your username. If you create new
 
 If you need to open a port for Wireguard or another service, [allow the port in iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) and run `sudo netfilter-persistent save` to save rules.
 
-The MariaDB database is automatically saved to disk each day for backup. To export manually, you can use the command below.
-
-```bash
-docker exec mariadb sh -c 'mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > ~/server/backups/mariadb.sql
-```
+Individual MariaDB databases are automatically saved to disk each day for backup in `~/server/backups/mariadb`. To run the export job manually, use `/root/.export_mariadb.sh`.
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
