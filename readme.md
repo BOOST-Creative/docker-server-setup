@@ -44,7 +44,7 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 These are defined and can be disabled in `~/server/docker-compose.yml`.
 
-### Notes
+## Notes
 
 To create / start / stop / fix permissions for wordpress sites, run the command `boost`.
 
