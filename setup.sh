@@ -48,7 +48,7 @@ usermod -aG sudo "$username" || usermod -aG wheel "$username"
 echo ""
 
 # SSH port prompt
-read -r -p "Which port do you want to use for SSH (not 6900-6904 please)? " ssh_port
+read -r -p "Which port do you want to use for SSH (not 6900-6905 please)? " ssh_port
 while (( ssh_port < 1000 || ssh_port > 65000)); do
   read -r -p "Please use a number between 1000 and 65000: " ssh_port
 done
@@ -180,7 +180,7 @@ done
   echo 'alias dcr="docker compose restart"';
   echo 'alias boost="curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/boost.sh > ~/.boost.sh && chmod +x ~/.boost.sh && ~/.boost.sh"';
   echo 'alias ctop="docker run --rm -ti --name=ctop --volume /var/run/docker.sock:/var/run/docker.sock:ro quay.io/vektorlab/ctop:latest"';
-  echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFileBrowser: \e[34mhttp://localhost:6903\e[0m\n\e[0mKopia: \e[34mhttp://localhost:6904\e[0m (kopia:'"$KOPIA_PASSWORD"')\n\nRun ctop to manage containers and view metrics.\n"';
+  echo 'echo -e "\nPortainer: \e[34mhttp://localhost:6900\n\e[0mNginx Proxy Manager: \e[34mhttp://localhost:6901\n\e[0mphpMyAdmin: \e[34mhttp://localhost:6902\n\e[0mFile Browser: \e[34mhttp://localhost:6903\n\e[0mKopia: \e[34mhttp://localhost:6904\e[0m (kopia:'"$KOPIA_PASSWORD"')\nDozzle: \e[34mhttp://localhost:6905\n\n\e[0mRun ctop to manage containers and view metrics.\n"';
   echo 'type ~/firewall.sh &>/dev/null && ./firewall.sh';
 } >> "/home/$username/.bashrc"
 
@@ -200,6 +200,7 @@ echo "    LocalForward 6901 127.0.0.1:6901"
 echo "    LocalForward 6902 127.0.0.1:6902"
 echo "    LocalForward 6903 127.0.0.1:6903"
 echo "    LocalForward 6904 127.0.0.1:6904"
+echo "    LocalForward 6905 127.0.0.1:6905"
 echo "    ServerAliveInterval 60"
 echo -e "    ServerAliveCountMax 10\n"
 

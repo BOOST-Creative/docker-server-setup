@@ -72,6 +72,14 @@ Replace `0.0.0.0` with the IP you want unbanned.
 docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
 ```
 
+### Logs
+
+You can view / search / download container logs with **[Dozzle](http://localhost:6905)**. For wordpress containers, this will show both nginx and php-fpm output.
+
+Nginx Proxy Manager logs are located in `~/server/npm/data/logs/`. You need the ID of the proxy host you want to view, which you can find by clicking the three dots in NPM. These logs are limited to web requests and are rotated weekly.
+
+Example command to view live log: `tail -f ~/server/npm/data/logs/proxy-host-1_access.log`
+
 ### Using with Cloudflare
 
 If you proxy traffic through Cloudflare and want to use Fail2ban, additional configuration is required to avoid banning Cloudflare IPs. Please reference the guides below.
