@@ -40,6 +40,8 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[Watchtower](https://github.com/containrrr/watchtower)** to automatically update running containers to the latest image version.
 
+- **[Dozzle](https://github.com/amir20/dozzle)** for browsing container logs.
+
 - **[Kopia](https://github.com/kopia/kopia)** for backups.
 
 These are defined and can be disabled in `~/server/docker-compose.yml`.
