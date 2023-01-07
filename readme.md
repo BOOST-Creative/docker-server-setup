@@ -30,13 +30,13 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager)** for publicly exposing your services with automatic SSL.
 
+- **[Fail2ban](https://github.com/crazy-max/docker-fail2ban)** configured to read Nginx Proxy Manager logs and block malicious IPs in iptables.
+
 - **[MariaDB database](https://hub.docker.com/r/linuxserver/mariadb)** used by Nginx Proxy Manager and any other apps you want.
 
 - **[phpMyAdmin](https://hub.docker.com/r/linuxserver/phpmyadmin)** for graphical administration of the MariaDB database.
 
 - **[File Browser](https://github.com/filebrowser/filebrowser)** for graphical file management.
-
-- **[Fail2ban](https://github.com/crazy-max/docker-fail2ban)** configured to read Nginx Proxy Manager logs and block malicious IPs in iptables.
 
 - **[Watchtower](https://github.com/containrrr/watchtower)** to automatically update running containers to the latest image version.
 
@@ -44,7 +44,7 @@ Besides Nginx Proxy Manager, all services are tunneled through SSH and not publi
 
 - **[Kopia](https://github.com/kopia/kopia)** for backups.
 
-These are defined and can be disabled in `~/server/docker-compose.yml`.
+These are defined and can be disabled in `~/server/docker-compose.yml`. (Except the Kopia server which is a systemd service.)
 
 ## Notes
 
