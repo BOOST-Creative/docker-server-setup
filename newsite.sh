@@ -39,7 +39,7 @@ then
   echo -e "\n\e[36mDatabase:\e[0m $BOOST_DB"
   echo -e "\e[36mUser:\e[0m $BOOST_DB_USER"
   echo -e "\e[36mPassword:\e[0m $BOOST_DB_PASS"
-  echo -e "\e[36mServer:\e[0m mariadb\n"
+  echo -e "\e[36mHost:\e[0m mariadb\n"
 fi
 
 
