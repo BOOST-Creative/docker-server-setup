@@ -58,20 +58,30 @@ Individual MariaDB databases are automatically saved to disk each day for backup
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
-The Fail2ban jail is reloaded every six hours with a systemd timer to pick up log files from new proxy hosts. You can manually run the command below if you need it to work with new services immediately.
+### Working with Fail2ban
+
+You can view logs for Fail2ban in Dozzle or by using the `docker logs` command.
+
+The jail is reloaded every six hours with a systemd timer to pick up log files from new proxy hosts.
+
+Additional rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
+
+**View status of jail and currently banned IPs.**
 
 ```bash
-docker exec fail2ban sh -c "fail2ban-client reload npm-docker"
+docker exec fail2ban sh -c "fail2ban-client status npm-docker"
 ```
 
-Additional Fail2ban rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
-
-### Unbanning IPs in Fail2ban jail
-
-Replace `0.0.0.0` with the IP you want unbanned.
+**Unban an IP in Fail2ban jail.** Replace `0.0.0.0` with the IP you want unbanned.
 
 ```bash
 docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
+```
+
+**Manually reload the jail.** Optional if you want protection for a newly created site right away. Jail automatically reloads every six hours.
+
+```bash
+docker exec fail2ban sh -c "fail2ban-client reload npm-docker"
 ```
 
 ### Logs
