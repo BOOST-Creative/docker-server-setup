@@ -38,7 +38,8 @@ then
   docker exec -e BOOST_DB="$BOOST_DB" -e BOOST_DB_USER="$BOOST_DB_USER" -e BOOST_DB_PASS="$BOOST_DB_PASS" mariadb /bin/bash -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE $BOOST_DB; CREATE USER '\''$BOOST_DB_USER'\''; SET PASSWORD FOR '\''$BOOST_DB_USER'\'' = PASSWORD('\''$BOOST_DB_PASS'\''); GRANT ALL PRIVILEGES ON $BOOST_DB.* TO '\''$BOOST_DB_USER'\''; FLUSH PRIVILEGES;"'
   echo -e "\n\e[36mDatabase:\e[0m $BOOST_DB"
   echo -e "\e[36mUser:\e[0m $BOOST_DB_USER"
-  echo -e "\e[36mPassword:\e[0m $BOOST_DB_PASS\n"
+  echo -e "\e[36mPassword:\e[0m $BOOST_DB_PASS"
+  echo -e "\e[36mServer:\e[0m mariadb\n"
 fi
 
 
