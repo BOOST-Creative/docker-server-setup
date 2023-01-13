@@ -9,17 +9,17 @@ do
     case $lng in
         "Start site")
           echo -e "\e[36mStarting site...\e[0m"
-          read -p "Enter site name or abbreviation (no spaces): " sitename
+          read -r -p "Enter site name or abbreviation (no spaces): " sitename
            docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" up -d
           break;;
         "Stop Site")
           echo -e "\e[36mStopping site...\e[0m"
-          read -p "Enter site name or abbreviation (no spaces): " sitename
+          read -r -p "Enter site name or abbreviation (no spaces): " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" stop
           break;;
         "Restart Site")
           echo -e "\e[36mRestarting site...\e[0m"
-          read -p "Enter site name or abbreviation (no spaces): " sitename
+          read -r -p "Enter site name or abbreviation (no spaces): " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" restart
           break;;
         "Create Site")
@@ -28,19 +28,20 @@ do
           break;;
         "Delete Site & Files")
           echo -e "\e[36mDeleting site (seriously, this will completely delete everything)...\e[0m"
-          read -p "Enter site name or abbreviation (no spaces) TO COMPLETELY DELETE: " sitename
+          read -r -p "Enter site name or abbreviation (no spaces) TO COMPLETELY DELETE: " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" stop
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" rm
           sudo rm -rf "/home/$CUR_USER/sites/$sitename"
           break;;
         "Fix permissions")
           echo -e "\e[36mFixing permissions...\e[0m"
-          read -p "Enter site name or abbreviation (no spaces): " sitename
+          read -r -p "Enter site name or abbreviation (no spaces): " sitename
           sudo chown -R nobody: "/home/$CUR_USER/sites/$sitename"
+          echo -e "\e[32mPermissions updated 👍\e[0m"
           break;;
         "Add SSH key")
-          read -p "Please paste your public SSH key: " sshkey
-          echo $sshkey >> /home/$CUR_USER/.ssh/authorized_keys
+          read -r -p "Please paste your public SSH key: " sshkey
+          echo "$sshkey" >> /home/"$CUR_USER"/.ssh/authorized_keys
           echo -e "\e[32mSSH key added 👍\e[0m"
           break;;
         "Quit")
