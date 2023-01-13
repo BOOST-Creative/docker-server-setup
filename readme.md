@@ -56,6 +56,8 @@ If you need to open a port for Wireguard or another service, [allow the port in 
 
 Individual MariaDB databases are automatically saved to disk each day for backup in `~/server/backups/mariadb`. To run the export job manually, use `/root/.export_mariadb.sh`.
 
+To remove access for an SSH key, edit `~/.ssh/authorized_keys` and remove the line containing the key.
+
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
 ### Working with Fail2ban
