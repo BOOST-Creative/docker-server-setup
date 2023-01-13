@@ -32,8 +32,8 @@ echo -e "\n\e[32mSite created at /home/$CUR_USER/sites/$sitename/wordpress\e[0m\
 read -r -p "Create database now (y/n)? "
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  BOOST_DB="$sitename"
-  BOOST_DB_USER="u_$sitename"
+  BOOST_DB="${sitename//-/_}"
+  BOOST_DB_USER="u_${sitename//-/_}"
   BOOST_DB_PASS=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c"${1:-16}")
   docker exec -e BOOST_DB="$BOOST_DB" -e BOOST_DB_USER="$BOOST_DB_USER" -e BOOST_DB_PASS="$BOOST_DB_PASS" mariadb /bin/bash -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE $BOOST_DB; CREATE USER '\''$BOOST_DB_USER'\''; SET PASSWORD FOR '\''$BOOST_DB_USER'\'' = PASSWORD('\''$BOOST_DB_PASS'\''); GRANT ALL PRIVILEGES ON $BOOST_DB.* TO '\''$BOOST_DB_USER'\''; FLUSH PRIVILEGES;"'
   echo -e "\n\e[36mDatabase:\e[0m $BOOST_DB"
