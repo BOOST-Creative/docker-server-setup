@@ -80,6 +80,12 @@ docker exec fail2ban sh -c "fail2ban-client status npm-docker"
 docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
 ```
 
+**Whitelist an IP to avoid bans.** Edit the jail config using `nano` or `vi` - then find the line starting with `ignoreip`. [Add further IPs separated by spaces](fail2ban.org/wiki/index.php/Whitelist). Reload the jail for the changes to take effect immediately.
+
+```bash
+sudo vi ~/server/fail2ban/data/jail.d/jail.local
+```
+
 **Manually reload the jail.** Optional if you want protection for a newly created site right away. Jail automatically reloads every six hours.
 
 ```bash
