@@ -100,6 +100,8 @@ Nginx Proxy Manager logs are located in `~/server/npm/data/logs/`. You need the 
 
 Example command to view live log: `tail -f ~/server/npm/data/logs/proxy-host-1_access.log`
 
+Example command search log for IP: `grep "0.0.0.0" ~/server/npm/data/logs/proxy-host-1_access.log`
+
 ### Using with Cloudflare
 
 If you proxy traffic through Cloudflare and want to use Fail2ban, additional configuration is required to avoid banning Cloudflare IPs. Please reference the guides below.
