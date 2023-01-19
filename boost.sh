@@ -4,7 +4,7 @@ CUR_USER="$(whoami)"
 
 PS3="Choose action: "
 
-select lng in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix permissions" "Add SSH key" "Quit"
+select lng in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix Permissions" "Add SSH Key" "Container Shell" "Quit"
 do
     case $lng in
         "Start site")
@@ -33,16 +33,21 @@ do
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" rm
           sudo rm -rf "/home/$CUR_USER/sites/$sitename"
           break;;
-        "Fix permissions")
+        "Fix Permissions")
           echo -e "\e[36mFixing permissions...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
           sudo chown -R nobody: "/home/$CUR_USER/sites/$sitename/wordpress"
           echo -e "\e[32mPermissions updated 👍\e[0m"
           break;;
-        "Add SSH key")
+        "Add SSH Key")
           read -r -p "Please paste your public SSH key: " sshkey
           echo "$sshkey" >> /home/"$CUR_USER"/.ssh/authorized_keys
           echo -e "\e[32mSSH key added 👍\e[0m"
+          break;;
+        "Container Shell")
+          read -r -p "Enter site name or abbreviation (no spaces): " sitename
+          echo ""
+          docker exec -it "$sitename" ash
           break;;
         "Quit")
           echo "Goodbye :)"
