@@ -22,10 +22,12 @@ maxretry = 8
 # use forward chain
 chain = FORWARD
 
+# whitelisted ip addresses (separate with space)
+ignoreip = 127.0.0.1/8 192.168.1.0/24
+
 [npm-docker]
 # IPs that trigger too many 403 or 404
 enabled = true
-ignoreip = 127.0.0.1/8 192.168.1.0/24
 action = npm-firewall-block
 filter = npm-docker
 logpath = /var/log/npm/proxy-host-*_access.log
@@ -35,13 +37,13 @@ enabled  = true
 filter   = wordpress-soft
 logpath  = /var/log/wp-fail2ban.log
 action = npm-firewall-block
-findtime = 600
-maxretry = 10
+findtime = 800
+maxretry = 8
 
 [wordpress-hard]
 enabled  = true
 filter   = wordpress-hard
 logpath  = /var/log/wp-fail2ban.log
 action = npm-firewall-block
-findtime = 600
+findtime = 1200
 maxretry = 2
