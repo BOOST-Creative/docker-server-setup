@@ -27,7 +27,7 @@ services:
       REDIS_HOST: CHANGE_TO_SITE_NAME-redis
       # installs recommended plugins (see readme)
       ADDITIONAL_PLUGINS:
-        'w3-total-cache post-smtp ninjafirewall disable-media-pages'
+        'w3-total-cache post-smtp ninjafirewall disable-media-pages wp-fail2ban wp-fail2ban-addon-gravity-forms'
         # cron jobs to run from within container (separate lines with \n)
       #CRON: "* * * * * touch hello-world \n
       #  0 * * * * curl http://127.0.0.1/webhook &>/dev/null"
