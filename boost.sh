@@ -4,9 +4,9 @@ CUR_USER="$(whoami)"
 
 PS3="Choose action: "
 
-select lng in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix Permissions" "Add SSH Key" "Container Shell" "Quit"
+select action in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix Permissions" "Add SSH Key" "Container Shell" "Fail2ban Status" "Unban IP" "Whitelist IP" "Quit"
 do
-    case $lng in
+    case $action in
         "Start site")
           echo -e "\e[36mStarting site...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
@@ -48,6 +48,24 @@ do
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
           echo ""
           docker exec -it "$sitename" ash
+          break;;
+        "Fail2ban Status")
+          docker exec fail2ban sh -c "fail2ban-client status | sed -n 's/,//g;s/.*Jail list://p' | xargs -n1 fail2ban-client status"
+          break;;
+        "Unban IP")
+          read -r -p "Enter IP Address: " unbanip
+          JAILS=$(docker exec fail2ban sh -c "fail2ban-client status | grep 'Jail list'" | sed -E 's/^[^:]+:[ \t]+//' | sed 's/,//g')
+          for JAIL in $JAILS
+          do
+            docker exec fail2ban sh -c "fail2ban-client set $JAIL unbanip $unbanip"
+          done
+          echo -e "\e[32m$unbanip has been unbanned. If needs to be whitelisted, make sure you do that as well 👍\e[0m"
+          break;;
+        "Whitelist IP")
+          read -r -p "Enter IP Address: " whitelistip
+          sudo sed -i "s|ignoreip =.*|& $whitelistip|" ~/server/fail2ban/data/jail.d/jail.local
+          docker exec fail2ban sh -c "fail2ban-client reload"
+          echo -e "\e[32m$whitelistip has been whitelisted. If it's currently banned, make sure you unban it as well 👍\e[0m"
           break;;
         "Quit")
           echo "Goodbye :)"
