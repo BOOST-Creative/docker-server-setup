@@ -16,12 +16,14 @@ services:
     volumes:
       - ./wordpress:/usr/src/wordpress
       - ./.htninja:/usr/src/.htninja
+      - /root/wp-fail2ban.log:/var/log/messages
     restart: unless-stopped
     networks:
       - CHANGE_TO_USERNAME
     depends_on:
       - CHANGE_TO_SITE_NAME-redis
     environment:
+      TZ: 'America/New_York'
       REDIS_HOST: CHANGE_TO_SITE_NAME-redis
       # installs recommended plugins (see readme)
       ADDITIONAL_PLUGINS:

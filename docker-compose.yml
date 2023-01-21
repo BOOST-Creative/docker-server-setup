@@ -128,3 +128,4 @@ services:
     volumes:
       - ./fail2ban/data:/data
       - ./npm/data/logs:/var/log/npm
+      - /root/wp-fail2ban.log:/var/log/wp-fail2ban.log

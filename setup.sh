@@ -130,6 +130,9 @@ usermod -aG docker "$username"
 # generate password file for kopia server
 htpasswd -bc /root/kopiap.txt kopia "$KOPIA_PASSWORD" > /dev/null 2>&1
 
+# make file for wp-fail2ban logs
+touch /root/wp-fail2ban.log
+
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
 sed -i "s/USERNAME/$username/" /etc/systemd/system/kopiaServer.service

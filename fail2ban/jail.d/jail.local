@@ -29,3 +29,19 @@ ignoreip = 127.0.0.1/8 192.168.1.0/24
 action = npm-firewall-block
 filter = npm-docker
 logpath = /var/log/npm/proxy-host-*_access.log
+
+[wordpress-soft]
+enabled  = true
+filter   = wordpress-soft
+logpath  = /var/log/wp-fail2ban.log
+action = npm-firewall-block
+findtime = 600
+maxretry = 10
+
+[wordpress-hard]
+enabled  = true
+filter   = wordpress-hard
+logpath  = /var/log/wp-fail2ban.log
+action = npm-firewall-block
+findtime = 600
+maxretry = 2
