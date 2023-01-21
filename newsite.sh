@@ -12,8 +12,6 @@ fi
 
 mkdir -p "/home/$CUR_USER/sites/$sitename/wordpress"
 curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/wordpress/docker-compose.yml > "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
-curl -s https://raw.githubusercontent.com/BOOST-Creative/docker-server-setup/main/wordpress/.htninja > "/home/$CUR_USER/sites/$sitename/.htninja"
-# chown nobody: /home/$CUR_USER/sites/$sitename/.htninja
 
 read -r -p 'Type "YES" if this site requires PHP 7: ' oldphp
 
