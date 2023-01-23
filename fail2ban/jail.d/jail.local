@@ -23,7 +23,7 @@ maxretry = 8
 chain = FORWARD
 
 # whitelisted ip addresses (separate with space)
-ignoreip = 127.0.0.1/8 192.168.1.0/24
+ignoreip = 127.0.0.1/8 192.168.1.0/24 172.16.0.0/12
 
 [npm-docker]
 # IPs that trigger too many 403 or 404
