@@ -58,6 +58,8 @@ To remove access for an SSH key, edit `~/.ssh/authorized_keys` and remove the li
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
+If you're running wordpress sites created via the `boost` command, wp-fail2ban events are logged to `~/server/wp-fail2ban.log`. This file is automatically monitored by the fail2ban container, and you can use it to review security related events. For example, use `grep "Accepted" ~/server/wp-fail2ban.log` to view succesful logins if you want to whitelist IPs. The timestamps in this file are unfortunately locked to GMT. If you know how to change the timezone for syslog in Alpine Linux, let me know.
+
 ## boost command
 
 The command `boost` runs a helper script that allows you to do the following:
@@ -76,7 +78,7 @@ The command `boost` runs a helper script that allows you to do the following:
 
 ## Working with Fail2ban
 
-You can view logs for Fail2ban in Dozzle or by using the `docker logs` command.
+You can view logs for Fail2ban in Dozzle or by using `docker logs fail2ban`.
 
 The jail is reloaded every six hours with a systemd timer to pick up log files from new proxy hosts.
 
@@ -98,12 +100,6 @@ docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
 
 ```bash
 sudo vi ~/server/fail2ban/data/jail.d/jail.local
-```
-
-**Manually reload the jail.** Optional if you want protection for a newly created site right away. Jail automatically reloads every six hours.
-
-```bash
-docker exec fail2ban sh -c "fail2ban-client reload npm-docker"
 ```
 
 ## Logs
