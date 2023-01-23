@@ -48,8 +48,6 @@ These are defined and can be disabled in `~/server/docker-compose.yml`. (Except 
 
 ## Notes
 
-To create / start / stop / fix permissions for wordpress sites, run the command `boost`.
-
 There is a docker network with the same name as your username. If you create new containers in that that network, you can use the container name as a hostname in Nginx Proxy Manager.
 
 If you need to open a port for Wireguard or another service, [allow the port in iptables](https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands) and run `sudo netfilter-persistent save` to save rules.
@@ -60,7 +58,23 @@ To remove access for an SSH key, edit `~/.ssh/authorized_keys` and remove the li
 
 If you want to monitor uptime, check out **[Uptime Kuma](https://github.com/louislam/uptime-kuma)**, but you should run this from a different machine.
 
-### Working with Fail2ban
+## boost command
+
+The command `boost` runs a helper script that allows you to do the following:
+
+- Start site
+- Stop site
+- Create wordpress site + database
+- Delete site / files
+- Restart site
+- Fix permissions for created wordpress site
+- Add SSH key
+- Start container shell session
+- View status of all Fail2ban jails
+- Unban IP in Fail2ban jail
+- Permanently whitelist IP in Fail2ban
+
+## Working with Fail2ban
 
 You can view logs for Fail2ban in Dozzle or by using the `docker logs` command.
 
@@ -92,7 +106,7 @@ sudo vi ~/server/fail2ban/data/jail.d/jail.local
 docker exec fail2ban sh -c "fail2ban-client reload npm-docker"
 ```
 
-### Logs
+## Logs
 
 You can view / search / download container logs with **[Dozzle](http://localhost:6905)**. For wordpress containers, this will show both nginx and php-fpm output.
 
@@ -102,7 +116,7 @@ Example command to view live log: `tail -f ~/server/npm/data/logs/proxy-host-1_a
 
 Example command search log for IP: `grep "0.0.0.0" ~/server/npm/data/logs/proxy-host-1_access.log`
 
-### Using with Cloudflare
+## Using with Cloudflare
 
 If you proxy traffic through Cloudflare and want to use Fail2ban, additional configuration is required to avoid banning Cloudflare IPs. Please reference the guides below.
 
