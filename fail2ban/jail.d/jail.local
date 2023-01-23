@@ -37,7 +37,7 @@ enabled  = true
 filter   = wordpress-soft
 logpath  = /var/log/wp-fail2ban.log
 action = npm-firewall-block
-findtime = 800
+findtime = 1200
 maxretry = 8
 
 [wordpress-hard]
@@ -45,5 +45,5 @@ enabled  = true
 filter   = wordpress-hard
 logpath  = /var/log/wp-fail2ban.log
 action = npm-firewall-block
-findtime = 1200
+findtime = 1800
 maxretry = 2
