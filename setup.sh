@@ -102,6 +102,9 @@ sed -i "s/REPLACE_ME/$ssh_port/" "/home/$username/firewall.sh"
 docker network create "$username"
 docker network create database
 
+# make file for wp-fail2ban logs
+touch "/home/$username/server/wp-fail2ban.log"
+
 # replace docker compose file with user input, and start
 sed -i "s/CHANGE_TO_USERNAME/$username/" "/home/$username/server/docker-compose.yml"
 sed -i "s/MARIA_DB_ROOT_PASSWORD/$MARIA_DB_ROOT_PASSWORD/" "/home/$username/server/docker-compose.yml"
@@ -129,9 +132,6 @@ usermod -aG docker "$username"
 
 # generate password file for kopia server
 htpasswd -bc /root/kopiap.txt kopia "$KOPIA_PASSWORD" > /dev/null 2>&1
-
-# make file for wp-fail2ban logs
-touch "/home/$username/server/wp-fail2ban.log"
 
 # set up automated jobs with systemd
 cp /tmp/docker-server/systemd/* /etc/systemd/system
