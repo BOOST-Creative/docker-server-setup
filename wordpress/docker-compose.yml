@@ -23,7 +23,7 @@ services:
     depends_on:
       - CHANGE_TO_SITE_NAME-redis
     environment:
-      TZ: 'America/New_York'
+      TZ: 'CHANGE_TO_TZ'
       REDIS_HOST: CHANGE_TO_SITE_NAME-redis
       # installs recommended plugins (see readme)
       ADDITIONAL_PLUGINS:
