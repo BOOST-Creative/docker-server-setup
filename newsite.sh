@@ -25,7 +25,7 @@ fi
 # replace yml with site name
 sed -i "s/CHANGE_TO_SITE_NAME/$sitename/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
 sed -i "s/CHANGE_TO_USERNAME/$CUR_USER/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
-sed -i "s/CHANGE_TO_TZ/$(timedatectl show | grep zone | sed 's/Timezone=//')/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
+# sed -i "s/CHANGE_TO_TZ/$(timedatectl show | grep zone | sed 's/Timezone=//')/" "/home/$CUR_USER/sites/$sitename/docker-compose.yml"
 
 echo -e "\n\e[32mSite created at /home/$CUR_USER/sites/$sitename/wordpress\e[0m\n"
 
