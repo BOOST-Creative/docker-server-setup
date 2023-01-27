@@ -7,6 +7,9 @@ services:
     container_name: CHANGE_TO_SITE_NAME-redis
     image: redis:7-alpine
     restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - CHANGE_TO_USERNAME
 
