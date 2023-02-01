@@ -106,6 +106,7 @@ docker network create database
 touch "/home/$username/server/wp-fail2ban.log"
 # rotate wp-fail2ban logs using logrotate
 cp /tmp/docker-server/wordpress/wp-fail2ban.conf /etc/logrotate.d/wp-fail2ban.conf
+sed -i "s/USERNAME/$username/" /etc/logrotate.d/wp-fail2ban.conf
 
 # replace docker compose file with user input, and start
 sed -i "s/CHANGE_TO_USERNAME/$username/" "/home/$username/server/docker-compose.yml"
