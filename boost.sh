@@ -37,6 +37,8 @@ do
           echo -e "\e[36mFixing permissions...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
           sudo chown -R nobody: "/home/$CUR_USER/sites/$sitename/wordpress"
+          sudo find "/home/$CUR_USER/sites/$sitename" -type d -exec chmod 755 {} +
+          sudo find "/home/$CUR_USER/sites/$sitename/wordpress" -type f -exec chmod 644 {} +
           echo -e "\e[32mPermissions updated 👍\e[0m"
           break;;
         "Add SSH Key")
