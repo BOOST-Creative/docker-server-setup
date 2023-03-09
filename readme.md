@@ -84,22 +84,10 @@ The jail is reloaded every six hours with a systemd timer to pick up log files f
 
 Additional rules may be added to the container in `~/server/fail2ban`. Use the FORWARD chain (not INPUT or DOCKER-USER) and make sure the filter regex is using the NPM log format - `[Client <HOST>]`.
 
-**View status of jail and currently banned IPs.**
+**Unban all IPs** If you get into a tricky situation.
 
 ```bash
-docker exec fail2ban sh -c "fail2ban-client status npm-docker"
-```
-
-**Unban an IP in Fail2ban jail.** Replace `0.0.0.0` with the IP you want unbanned.
-
-```bash
-docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip 0.0.0.0"
-```
-
-**Whitelist an IP to avoid bans.** Edit the jail config using `nano` or `vi` - then find the line starting with `ignoreip`. [Add further IPs separated by spaces](https://fail2ban.org/wiki/index.php/Whitelist). Reload the jail for the changes to take effect immediately.
-
-```bash
-sudo vi ~/server/fail2ban/data/jail.d/jail.local
+docker exec fail2ban sh -c "fail2ban-client set npm-docker unbanip --all"
 ```
 
 ## Logs
