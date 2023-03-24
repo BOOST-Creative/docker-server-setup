@@ -51,12 +51,14 @@ then
   echo -e "\n\e[36mChanging owner of site directory...\e[0m"
   # fix permissions for wordpress directory
   sudo chown nobody: "/home/$CUR_USER/sites/$sitename/wordpress"
-  echo "Upload your files and start the site later. Goodbye :)"
+  echo "Upload your files and start the site later 👍"
   rm ~/.newsite.sh
   exit;
 fi
 
 # start site
 docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" up -d
+
+echo "Site created 👍"
 
 rm ~/.newsite.sh

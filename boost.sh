@@ -11,16 +11,19 @@ do
           echo -e "\e[36mStarting site...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
            docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" up -d
+           echo -e "\e[32mSite started 👍\e[0m"
           break;;
         "Stop Site")
           echo -e "\e[36mStopping site...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" stop
+          echo -e "\e[32mSite stopped 👍\e[0m"
           break;;
         "Restart Site")
           echo -e "\e[36mRestarting site...\e[0m"
           read -r -p "Enter site name or abbreviation (no spaces): " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" restart
+          echo -e "\e[32mSite restarted 👍\e[0m"
           break;;
         "Create Site")
           echo -e "\e[36mCreating site...\e[0m"
@@ -31,7 +34,7 @@ do
           read -r -p "Enter site name or abbreviation (no spaces) TO COMPLETELY DELETE: " sitename
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" stop
           docker compose -f "/home/$CUR_USER/sites/$sitename/docker-compose.yml" rm
-          sudo rm -rf "/home/$CUR_USER/sites/$sitename"
+          sudo rm -r "/home/$CUR_USER/sites/$sitename"
           break;;
         "Fix Permissions")
           echo -e "\e[36mFixing permissions...\e[0m"
@@ -70,7 +73,7 @@ do
           echo -e "\e[32m$whitelistip has been whitelisted. If it's currently banned, make sure you unban it as well 👍\e[0m"
           break;;
         "Quit")
-          echo "Goodbye :)"
+          echo "Goodbye 👍"
           break;;
         *)
           echo "huh?";;
