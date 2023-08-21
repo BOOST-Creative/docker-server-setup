@@ -39,6 +39,7 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'NPM_DB_PASSWORD'
       MYSQL_DATABASE: npm
+      MARIADB_AUTO_UPGRADE: 'true'
 
   phpmyadmin:
     image: linuxserver/phpmyadmin
