@@ -4,7 +4,7 @@ CUR_USER="$(whoami)"
 
 PS3="Choose action: "
 
-select action in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix Permissions" "Add SSH Key" "Container Shell" "Fail2ban Status" "Unban IP" "Whitelist IP" "Quit"
+select action in "Start site" "Stop Site" "Create Site" "Delete Site & Files" "Restart Site" "Fix Permissions" "Add SSH Key" "Container Shell" "Fail2ban Status" "Unban IP" "Whitelist IP" "Prune Docker Images" "MariaDB Upgrade" "Quit"
 do
     case $action in
         "Start site")
@@ -71,6 +71,12 @@ do
           sudo sed -i "s|ignoreip =.*|& $whitelistip|" ~/server/fail2ban/data/jail.d/jail.local
           docker exec fail2ban sh -c "fail2ban-client reload"
           echo -e "\e[32m$whitelistip has been whitelisted. If it's currently banned, make sure you unban it as well 👍\e[0m"
+          break;;
+        "Prune Docker Images")
+          docker image prune -a
+          break;;
+        "MariaDB Upgrade")
+          docker exec mariadb sh -c 'mysql_upgrade -uroot -p"$MYSQL_ROOT_PASSWORD"'
           break;;
         "Quit")
           echo "Goodbye 👍"
