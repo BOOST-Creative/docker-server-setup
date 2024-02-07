@@ -62,7 +62,7 @@ do
           break;;
         "Container Shell")
           select_project
-          echo ""
+          echo -e "\e[36mConnecting shell for $sitename...\e[0m"
           docker exec -it "$sitename" ash
           break;;
         "Fail2ban Status")
