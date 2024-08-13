@@ -19,7 +19,7 @@ services:
     volumes:
       - ./wordpress:/usr/src/wordpress
       - ./.htninja:/usr/src/.htninja
-      - /home/CHANGE_TO_USERNAME/server/wp-fail2ban.log:/var/log/messages
+      # - /home/CHANGE_TO_USERNAME/server/wp-fail2ban.log:/var/log/messages
     restart: unless-stopped
     networks:
       - CHANGE_TO_USERNAME
@@ -29,8 +29,8 @@ services:
       # TZ: 'CHANGE_TO_TZ'
       REDIS_HOST: CHANGE_TO_SITE_NAME-redis
       # installs recommended plugins (see readme)
-      ADDITIONAL_PLUGINS:
-        'w3-total-cache wp-fail2ban wp-fail2ban-addon-gravity-forms ninjafirewall'
+      ADDITIONAL_PLUGINS: 'w3-total-cache better-wp-security simple-cloudflare-turnstile'
+        # 'w3-total-cache wp-fail2ban wp-fail2ban-addon-gravity-forms ninjafirewall'
         # cron jobs to run from within container (separate lines with \n)
       #CRON: "* * * * * touch hello-world \n
       #  0 * * * * curl http://127.0.0.1/webhook &>/dev/null"
